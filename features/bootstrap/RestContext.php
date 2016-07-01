@@ -77,7 +77,7 @@ class RestContext implements Context, SnippetAcceptingContext
                 'query'       => $this->getQueryString(),
                 'config' => [
                     'curl' => [
-                        CURLOPT_FRESH_CONNECT => true
+                        'xxx' => true
                     ]
                 ]
             ]
