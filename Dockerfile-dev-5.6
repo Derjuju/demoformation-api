@@ -26,17 +26,16 @@ RUN apt-get update \
  && cp /usr/src/php/php.ini-production /usr/local/etc/php/php.ini \
  && printf '[Date]\ndate.timezone=UTC' > /usr/local/etc/php/conf.d/timezone.ini
 
+COPY docker-entrypoint.sh /usr/local/bin
+RUN ln -s /usr/local/bin/docker-entrypoint.sh /entrypoint.sh # backwards compat
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+
 WORKDIR /var/www
-### END OF Dockerfile copy
 
 VOLUME /var/www
 
 RUN cp /usr/src/php/php.ini-development /usr/local/etc/php/php.ini
 
-CMD composer install \
- && php public/index.php development enable \
- && /etc/init.d/mysql start \
- && ./vendor/bin/phing reset-db \
- && ./vendor/bin/phing setup \
- && php -S 0.0.0.0:80 -t public public/index.php
+ENTRYPOINT ["docker-entrypoint.sh"]
 
+#CMD php -S 0.0.0.0:80 -t public public/index.php
