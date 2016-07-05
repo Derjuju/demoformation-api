@@ -36,5 +36,7 @@ RUN cp /usr/src/php/php.ini-development /usr/local/etc/php/php.ini
 CMD composer install \
  && php public/index.php development enable \
  && /etc/init.d/mysql start \
+ && ./vendor/bin/phing reset-db \
+ && ./vendor/bin/phing setup \
  && php -S 0.0.0.0:80 -t public public/index.php
 
