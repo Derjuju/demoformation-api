@@ -31,6 +31,14 @@ return array(
     'db' => array(
         'adapters' => array(
             'db_application' => array(
+                'driver' => 'Pdo',
+                'dsn' => 'mysql:dbname=@db.dbname@;host=@db.host@',
+                'driver_options' => array(
+                    1002 => 'SET NAMES \'UTF8\'',
+                ),
+                'options' => array(
+                    'buffer_results' => true,
+                ),
                 'username' => '@db.username@',
                 'password' => '@db.password@',
             ),
