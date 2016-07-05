@@ -1,11 +1,9 @@
 version: '2'
 services:
-  dev-5.6:
-    build:
-      context: .
-      dockerfile: Dockerfile-dev-5.6
+  dev:
+    image : demoformationapi_dev-${PHPVERSION}:latest 
     network_mode: bridge
-    hostname: dev-5.6 
+    hostname: dev-5.6
     ports:
      - "8080:80"
     depends_on:
