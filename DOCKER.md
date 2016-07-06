@@ -1,4 +1,4 @@
-# docker-machine
+# docker-machine test
 
 ## creating the machine
 
@@ -83,4 +83,3 @@ docker rmi -f `docker images -f 'dangling=true' -q`
 ```bash
 docker exec -it <container name/id> bash
 ```
-
