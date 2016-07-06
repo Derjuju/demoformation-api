@@ -14,13 +14,6 @@ db.dbname=skeleton
 db.username=root
 db.password=
 ```
-
-## Build your php container
-
-```bash
-docker-compose build
-````
-
 ## Start and Reset your database
 
 ```bash
@@ -45,4 +38,17 @@ docker-compose start
 docker-compose down
 ```
 
+# Building Images
 
+## Login to your docker hub
+
+```bash
+docker login
+```
+
+## Build and pushing your container
+
+```bash
+docker-compose -f docker-compose-build.yml build
+docker push interact-iv/demoapi-php5.6:latest 
+```
