@@ -1,4 +1,4 @@
-# docker-machine test
+# docker-machine
 
 ## creating the machine
 
