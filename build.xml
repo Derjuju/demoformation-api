@@ -5,8 +5,10 @@
         <then>
             <property file="${project.basedir}/build.local.properties" />
         </then>
+	<else>
+    	    <property file="${project.basedir}/build.properties" />
+	</else>
     </if>
-    <property file="${project.basedir}/build.properties" />
     
     <target name="help" description="List available targets">
         <exec executable="vendor/bin/phing"
