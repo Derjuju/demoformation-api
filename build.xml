@@ -81,9 +81,13 @@
         <exec command="${phinx.bin} migrate -c phinx.yml --quiet" passthru="true"/>
     </target>
 
+    <target name="show-env" description="Display environment vars">
+        <exec command="env" passthru="true"/>
+    </target>
+
     <target name="reset-db" description="Reset the Database" depends="drop-db, init-db"/>
 
     <target name="setup"
             description="Setup external dependencies and migrate data"
-            depends="generate-config, setup-phinx, db-migration"/>
+            depends="show-env, generate-config, setup-phinx, db-migration"/>
 </project>
