@@ -10,10 +10,14 @@ services:
      - "8080:80"
     depends_on:
      - redis
+     - mysql
     links:
      - redis
+     - mysql
     volumes:
      - .:/var/www
+    environment:
+      - RESET_DB=${RESET_DB}
   redis:
     image: redis
     network_mode: bridge
@@ -21,3 +25,12 @@ services:
     ports:
         - "6379:6379"
     restart: always
+  mysql:
+    image: mysql:latest
+    network_mode: bridge
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
