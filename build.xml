@@ -5,10 +5,8 @@
         <then>
             <property file="${project.basedir}/build.local.properties" />
         </then>
-	<else>
-    	    <property file="${project.basedir}/build.properties" />
-	</else>
     </if>
+    <property file="${project.basedir}/build.properties" />
     
     <target name="help" description="List available targets">
         <exec executable="vendor/bin/phing"
@@ -27,11 +25,11 @@
             <mapper type="glob" from="*.local.php.dist" to="*.local.php" />
             <filterchain>
                 <replacetokens>
-                    <token key="db.host" value="${MYSQL_ADDON_HOST}" />
-                    <token key="db.port" value="${MYSQL_ADDON_PORT}" />
-                    <token key="db.dbname" value="${MYSQL_ADDON_DB}" />
-                    <token key="db.username" value="${MYSQL_ADDON_USER}" />
-                    <token key="db.password" value="${MYSQL_ADDON_PASSWORD}" />
+                    <token key="db.host" value="${db.host}" />
+                    <token key="db.port" value="${db.port}" />
+                    <token key="db.dbname" value="${db.dbname}" />
+                    <token key="db.username" value="${db.username}" />
+                    <token key="db.password" value="${db.password}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -43,11 +41,11 @@
             <filterchain>
                 <replacetokens>
                     <token key="env" value="${env}" />
-                    <token key="db.host" value="${MYSQL_ADDON_HOST}" />
-                    <token key="db.port" value="${MYSQL_ADDON_PORT}" />
-                    <token key="db.dbname" value="${MYSQL_ADDON_DB}" />
-                    <token key="db.username" value="${MYSQL_ADDON_USER}" />
-                    <token key="db.password" value="${MYSQL_ADDON_PASSWORD}" />
+                    <token key="db.host" value="${db.host}" />
+                    <token key="db.port" value="${db.port}" />
+                    <token key="db.dbname" value="${db.dbname}" />
+                    <token key="db.username" value="${db.username}" />
+                    <token key="db.password" value="${db.password}" />
                 </replacetokens>
             </filterchain>
         </loadfile>
@@ -55,8 +53,8 @@
     </target>
 
     <target name="drop-db">
-        <echo file="./data/db/drop.sql">DROP DATABASE IF EXISTS `${MYSQL_ADDON_DB}`;</echo>
-        <pdosqlexec url="mysql:host=${MYSQL_ADDON_HOST}" userid="root">
+        <echo file="./data/db/drop.sql">DROP DATABASE IF EXISTS `${db.dbname}`;</echo>
+        <pdosqlexec url="mysql:host=${db.host}" userid="root">
             <transaction src="./data/db/drop.sql"/>
         </pdosqlexec>
 
@@ -65,14 +63,14 @@
 
     <target name="init-db" description="Create Database and Grants">
         <echo file="${project.basedir}/data/db/create.sql">
-            CREATE DATABASE IF NOT EXISTS ${MYSQL_ADDON_DB};
-            GRANT USAGE ON *.* TO '${MYSQL_ADDON_USER}'@'%' IDENTIFIED BY '${MYSQL_ADDON_PASSWORD}';
+            CREATE DATABASE IF NOT EXISTS ${db.dbname};
+            GRANT USAGE ON *.* TO '${db.username}'@'%' IDENTIFIED BY '${db.password}';
             GRANT UPDATE,CREATE,REFERENCES,ALTER,LOCK TABLES,CREATE VIEW,CREATE
             ROUTINE,TRIGGER,INSERT,DELETE,DROP,INDEX,CREATE TEMPORARY TABLES,EXECUTE,SHOW VIEW,ALTER ROUTINE,SELECT ON
-            `${MYSQL_ADDON_DB}`.* TO '${MYSQL_ADDON_USER}'@'%';
+            `${db.dbname}`.* TO '${db.username}'@'%';
         </echo>
 
-        <pdosqlexec url="mysql:host=${MYSQL_ADDON_HOST}" userid="root">
+        <pdosqlexec url="mysql:host=${db.host}" userid="root">
             <transaction src="${project.basedir}/data/db/create.sql"/>
         </pdosqlexec>
 
