@@ -83,6 +83,7 @@
 
     <target name="show-env" description="Display environment vars">
         <exec command="env" passthru="true"/>
+	<echo>DB HOST: ${db.host}</echo>
     </target>
 
     <target name="reset-db" description="Reset the Database" depends="drop-db, init-db"/>
